@@ -24,6 +24,17 @@ func (this *Sliceint) Delete(elem ...int) {
 		this.delete(v)
 	}
 }
+func (this *Sliceint) Check(elem int) bool {
+	if len(*this) == 0 {
+		return false
+	}
+	for _, v := range *this {
+		if v == elem {
+			return true
+		}
+	}
+	return false
+}
 func (this *Sliceint) delete(elem int) {
 	if len(*this) == 0 {
 		return
@@ -31,9 +42,12 @@ func (this *Sliceint) delete(elem int) {
 	for k, v := range *this {
 		if v == elem {
 			switch k {
-				case 0:*this = (*this)[1:]
-				case len(*this)-1:*this = (*this)[:len(*this)-1]
-				default:*this = append((*this)[:k], (*this)[k+1:]...)
+			case 0:
+				*this = (*this)[1:]
+			case len(*this) - 1:
+				*this = (*this)[:len(*this)-1]
+			default:
+				*this = append((*this)[:k], (*this)[k+1:]...)
 			}
 		}
 	}
